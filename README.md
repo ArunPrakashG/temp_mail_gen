@@ -1,5 +1,7 @@
 # temp_mail_gen
 
+Pubspec download: https://pub.dev/packages/temp_mail_gen
+
 Unoffical wrapper to get emails from 1secmail api.
 
 Created from templates made available by Stagehand under a BSD-style
