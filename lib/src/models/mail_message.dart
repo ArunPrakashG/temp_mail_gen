@@ -12,14 +12,14 @@ class MailMessage {
     this.htmlBody,
   });
 
-  final int id;
-  final String from;
-  final String subject;
-  final DateTime date;
-  final List<Attachment> attachments;
-  final String body;
-  final String textBody;
-  final String htmlBody;
+  final int? id;
+  final String? from;
+  final String? subject;
+  final DateTime? date;
+  final List<Attachment>? attachments;
+  final String? body;
+  final String? textBody;
+  final String? htmlBody;
 
   factory MailMessage.fromJson(String str) => MailMessage.fromMap(json.decode(str));
 
@@ -40,8 +40,8 @@ class MailMessage {
         'id': id,
         'from': from,
         'subject': subject,
-        'date': date == null ? null : date.toIso8601String(),
-        'attachments': attachments == null ? null : List<dynamic>.from(attachments.map((x) => x.toMap())),
+        'date': date == null ? null : date!.toIso8601String(),
+        'attachments': attachments == null ? null : List<dynamic>.from(attachments!.map((x) => x.toMap())),
         'body': body,
         'textBody': textBody,
         'htmlBody': htmlBody,
@@ -55,9 +55,9 @@ class Attachment {
     this.size,
   });
 
-  final String filename;
-  final String contentType;
-  final int size;
+  final String? filename;
+  final String? contentType;
+  final int? size;
 
   factory Attachment.fromJson(String str) => Attachment.fromMap(json.decode(str));
 

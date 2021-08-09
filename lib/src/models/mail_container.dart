@@ -8,10 +8,10 @@ class MailContainer {
     this.date,
   });
 
-  final int id;
-  final String from;
-  final String subject;
-  final DateTime date;
+  final int? id;
+  final String? from;
+  final String? subject;
+  final DateTime? date;
 
   factory MailContainer.fromJson(String str) => MailContainer.fromMap(json.decode(str));
 
@@ -28,6 +28,6 @@ class MailContainer {
         'id': id,
         'from': from,
         'subject': subject,
-        'date': date == null ? null : date.toIso8601String(),
+        'date': date == null ? null : date!.toIso8601String(),
       };
 }

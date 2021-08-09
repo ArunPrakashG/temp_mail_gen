@@ -9,7 +9,7 @@ import 'models/mail_message.dart';
 class TempMailClient {
   static const String oneSecondMailBaseUrl = 'https://www.1secmail.com/api/v1/';
 
-  Future<List<String>> getDomains() async {
+  Future<List<String>?> getDomains() async {
     final response = await http.get(Uri.parse(oneSecondMailBaseUrl + '?action=getDomainList'));
 
     if (response.statusCode != 200) {
@@ -19,7 +19,7 @@ class TempMailClient {
     return (jsonDecode(response.body) as Iterable<dynamic>).map<String>((e) => e as String).toList();
   }
 
-  Future<List<String>> getEmails([int count = 1]) async {
+  Future<List<String>?> getEmails([int count = 1]) async {
     final response = await http.get(Uri.parse(oneSecondMailBaseUrl + '?action=genRandomMailbox&count=$count'));
 
     if (response.statusCode != 200) {
@@ -29,8 +29,8 @@ class TempMailClient {
     return (jsonDecode(response.body) as Iterable<dynamic>).map<String>((e) => e as String).toList();
   }
 
-  Future<List<MailContainer>> getMails(String mailId) async {
-    if (mailId == null || mailId.isEmpty) {
+  Future<List<MailContainer>?> getMails(String mailId) async {
+    if (mailId.isEmpty) {
       return null;
     }
 
@@ -47,8 +47,8 @@ class TempMailClient {
     return (jsonDecode(response.body) as Iterable<dynamic>).map<MailContainer>((e) => MailContainer.fromMap(e)).toList();
   }
 
-  Future<MailMessage> getSingleMail(String mailId, int messageId) async {
-    if (mailId == null || mailId.isEmpty || messageId < 0) {
+  Future<MailMessage?> getSingleMail(String mailId, int messageId) async {
+    if (mailId.isEmpty || messageId < 0) {
       return null;
     }
 
@@ -64,8 +64,8 @@ class TempMailClient {
     return MailMessage.fromJson(response.body);
   }
 
-  Future<Uint8List> getAttachment(String mailId, int messageId, String attachmentName) async {
-    if (mailId == null || mailId.isEmpty || messageId < 0 || attachmentName == null || attachmentName.isEmpty) {
+  Future<Uint8List?> getAttachment(String mailId, int messageId, String attachmentName) async {
+    if (mailId.isEmpty || messageId < 0 || attachmentName.isEmpty) {
       return null;
     }
 
@@ -73,8 +73,7 @@ class TempMailClient {
     final domain = split[1];
     final login = split[0];
 
-    final response =
-        await http.get(Uri.parse(oneSecondMailBaseUrl + '?action=download&login=$login&domain=$domain&id=$messageId&file=$attachmentName'));
+    final response = await http.get(Uri.parse(oneSecondMailBaseUrl + '?action=download&login=$login&domain=$domain&id=$messageId&file=$attachmentName'));
 
     if (response.statusCode != 200) {
       return null;
